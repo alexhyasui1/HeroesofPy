@@ -151,13 +151,43 @@ purchase_age_summary = purchase_age_summary.rename_axis("Age Ranges")
 purchase_age_summary
 ```
 
-|             | Total Count | Average Purchase Price | Total Purchase Value |  
-| ----------: | ----------: | ---------------------: |
-| 0-9         | 17          | 2.59%                 |
-| 10-14       | 22          | 3.82%                 |
-| 15-19       | 107         | 18.58%                |
-| 20-24       | 258         | 44.79%                |
-| 25-29       | 77          | 13.37%                |
-| 30-34       | 52          | 9.03%                 |
-| 35-39       | 31          | 5.38%                 |
-| 40 and over | 12          | 2.08%                 |
+|             | Total Count | Average Purchase Price | Total Purchase Value | Avg Total Purchase per Person |  
+| ----------: | ----------: | ---------------------: | -------------------: | ----------------------------: |
+| 0-9         | 23          | $3.35                  | $77.13               | $4.54                         |
+| 10-14       | 28          | $2.96                  | $82.78               | $3.76                         |
+| 15-19       | 136         | $3.04                  | $412.89              | $3.86                         |
+| 20-24       | 365         | $3.05                  | $1114.06             | $4.32                         |
+| 25-29       | 101         | $2.90                  | $293.00              | $3.81                         |
+| 30-34       | 73          | $2.93                  | $214.00              | $4.12                         |
+| 35-39       | 41          | $3.60                  | $147.67              | $4.76                         |
+| 40 and over | 13          | $2.94                  | $38.24               | $3.19                         |
+
+## Players Purchase Count
+```python
+#Who Spends the most
+user_purchase_count = purchase_data.groupby("SN")["Price"].count()
+user_purchase_price = purchase_data.groupby("SN")["Price"].mean()
+user_purchase_total = purchase_data.groupby("SN")["Price"].sum()
+
+user_summary = pd.DataFrame({"Purchase Count": user_purchase_count,
+                            "Average Purchase Price": user_purchase_price,
+                            "Total Purchase per Person": user_purchase_total})
+
+user_summary = user_summary.sort_values(by = "Total Purchase per Person", ascending = False)
+user_summary[["Average Purchase Price","Total Purchase per Person"]] = user_summary[["Average Purchase Price","Total Purchase per Person"]].applymap("${:.2f}".format)
+user_summary
+```
+
+|             | Purchase Count | Average Purchase Price | Total Purchase per Person |
+| ----------: | -------------: | ---------------------: | ------------------------: |
+| Lisosia93   |	5              |                	$3.79 |	$18.96                    |
+| Idastidru52 | 4              | $3.86                  | $15.45 |
+| Chamjask73  |	3 |	$4.61 |	$13.83 |
+| Iral74      | 4 | $3.40 | $13.62 |
+| Iskadarya95 | 3 | $4.37 | $13.10 |
+| ...         | ... | ... | ... |
+| Ililsasya43 | 1 | $1.02 | $1.02 |
+| Irilis75    | 1 | $1.02 | $1.02 |
+| Aidai61     | 1 | $1.01 | $1.01 |
+| Chanirra79  | 1 | $1.01 | $1.01 |
+| Alo38       | 1 | $1.00 | $1.00 |
