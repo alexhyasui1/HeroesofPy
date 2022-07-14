@@ -120,9 +120,44 @@ age_summary["Percentage of Players"] = age_summary["Percentage of Players"].map(
 age_summary
 ```
 
-|            | Total Count | Percentage of Players |
-| -------: | ----------: | --------------------: |
-| 0-9         | 484         | 84.03                 |
-| 10-14       | 81          | 14.06                 |
-| 15-19       | 11          | 1.91                  |
-| 40 and over | 11          | 1.91                  |
+|             | Total Count | Percentage of Players |
+| ----------: | ----------: | --------------------: |
+| 0-9         | 17          | 2.59%                 |
+| 10-14       | 22          | 3.82%                 |
+| 15-19       | 107         | 18.58%                |
+| 20-24       | 258         | 44.79%                |
+| 25-29       | 77          | 13.37%                |
+| 30-34       | 52          | 9.03%                 |
+| 35-39       | 31          | 5.38%                 |
+| 40 and over | 12          | 2.08%                 |
+
+## Purchase and Age Analysis
+```python
+#Purchasing analysis with Age
+purchase_data["Age Ranges"] = pd.cut(purchase_data["Age"], bins, labels = age_groups)
+purchase_age_count = purchase_data["Age Ranges"].value_counts()
+
+avg_age_price = purchase_data.groupby("Age Ranges")["Price"].mean()
+total_age_purchase = purchase_data.groupby("Age Ranges")["Price"].sum()
+avg_age_purchase = total_age_purchase / age_purchase_count
+
+purchase_age_summary = pd.DataFrame({"Purchase Count": purchase_age_count,
+                                    "Average Purchase Price": avg_age_price,
+                                    "Total Purchase Value": total_age_purchase,
+                                    "Avg Total Purchase per Person": avg_age_purchase})
+
+purchase_age_summary[["Average Purchase Price","Total Purchase Value","Avg Total Purchase per Person"]] = purchase_age_summary[["Average Purchase Price","Total Purchase Value","Avg Total Purchase per Person"]].applymap("${:.2f}".format)
+purchase_age_summary = purchase_age_summary.rename_axis("Age Ranges")
+purchase_age_summary
+```
+
+|             | Total Count | Average Purchase Price | Total Purchase Value |  
+| ----------: | ----------: | ---------------------: |
+| 0-9         | 17          | 2.59%                 |
+| 10-14       | 22          | 3.82%                 |
+| 15-19       | 107         | 18.58%                |
+| 20-24       | 258         | 44.79%                |
+| 25-29       | 77          | 13.37%                |
+| 30-34       | 52          | 9.03%                 |
+| 35-39       | 31          | 5.38%                 |
+| 40 and over | 12          | 2.08%                 |
