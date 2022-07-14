@@ -180,14 +180,62 @@ user_summary
 
 |             | Purchase Count | Average Purchase Price | Total Purchase per Person |
 | ----------: | -------------: | ---------------------: | ------------------------: |
-| Lisosia93   |	5              |                	$3.79 |	$18.96                    |
-| Idastidru52 | 4              | $3.86                  | $15.45 |
-| Chamjask73  |	3 |	$4.61 |	$13.83 |
-| Iral74      | 4 | $3.40 | $13.62 |
-| Iskadarya95 | 3 | $4.37 | $13.10 |
-| ...         | ... | ... | ... |
-| Ililsasya43 | 1 | $1.02 | $1.02 |
-| Irilis75    | 1 | $1.02 | $1.02 |
-| Aidai61     | 1 | $1.01 | $1.01 |
-| Chanirra79  | 1 | $1.01 | $1.01 |
-| Alo38       | 1 | $1.00 | $1.00 |
+| SN          |	               |                        |	                          |
+| Lisosia93   |	5              | $3.79                  |	$18.96                    |
+| Idastidru52 | 4              | $3.86                  | $15.45                    |
+| Chamjask73  |	3              |	$4.61                 |	$13.83                    |
+| Iral74      | 4              | $3.40                  | $13.62                    |
+| Iskadarya95 | 3              | $4.37                  | $13.10                    |
+| ...         | ...            | ...                    | ...                       |
+| Ililsasya43 | 1              | $1.02                  | $1.02                     |
+| Irilis75    | 1              | $1.02                  | $1.02                     |
+| Aidai61     | 1              | $1.01                  | $1.01                     |
+| Chanirra79  | 1              | $1.01                  | $1.01                     |
+| Alo38       | 1              | $1.00                  | $1.00                     |
+
+## Most Popular Item Choices
+```python
+#Most popular item purchases
+most_purchased = purchase_data.groupby(["Item ID","Item Name"])["Price"].count()
+popular_item = purchase_data.groupby(["Item ID","Item Name"])["Price"].sum()
+
+item_price = popular_item / most_purchased
+
+item_summary = pd.DataFrame({"Purchase Count": most_purchased,
+                            "Item Price": item_price,
+                            "Total Purchase Value": popular_item})
+
+item_summary = item_summary.sort_values(["Purchase Count"], ascending = False)
+item_summary[["Item Price", "Total Purchase Value"]] = item_summary[["Item Price", "Total Purchase Value"]].applymap("${:.2f}".format)
+item_summary.head()
+```
+
+|         |                                              | Purchase Count | Item Price | Total Purchase Value |
+| ------: | -------------------------------------------: | -------------: | ---------: | -------------------: |
+| Item ID | Item Name                                    |                |            |                      |  
+| 92      | Final Critic                                 | 13             | $4.61      | $59.99               |
+| 178     |	Oathbreaker, Last Hope of the Breaking Storm | 12             | $4.23      | $50.76               |
+| 145     |	Fiery Glass Crusader                         | 9	            | $4.58      | $41.22               |
+| 132	    | Persuasion                                   | 9              |	$3.22	     | $28.99               |
+| 108	    | Extraction, Quickblade Of Trembling Hands    | 9              | $3.53      | $31.77               |
+
+## Most Profitable items
+```python
+#Most profitable items
+most_profitable = item_summary.sort_values(["Total Purchase Value"], ascending = False)
+most_profitable.head(10)
+```
+
+|         |                                    | Purchase Count | Item Price | Total Purchase Value |
+| ------: | ---------------------------------: | -------------: | ---------: | -------------------: |
+| Item ID | Item Name                          |                |            |                      |  
+| 63      | Stormfury Mace                     | 2              | $4.99      | $9.98                |
+| 29      |	Chaos, Ender of the End            | 5              | $1.98      | $9.90                |
+| 173     |	Stormfury Longsword                | 2	            | $4.93      | $9.86                |
+| 38	    | The Void, Vengeance of Dark Magic  | 4              |	$2.37	     | $9.48                |
+| 143	    | Frenzied Scimitar                  | 6              | $1.56      | $9.36                |
+| 7       | Thorn, Satchel of Dark Souls       | 7              | $1.33      | $9.31                |
+| 18      |	Torchlight, Bond of Storms         | 2              | $4.65      | $9.30                |
+| 129     |	Fate, Vengeance of Eternal Justice | 6	            | $1.54      | $9.24                |
+| 166	    | Thirsty Iron Reaver                | 3              |	$3.07	     | $9.21                |
+| 123	    | Twilight's Carver                  | 4              | $2.28      | $9.12                |
