@@ -80,6 +80,7 @@ gender_summary_df
 
 ## Purchase and Gender Analysis
 ```python
+#Purchasing analysis with gender
 gender_purchase_count = purchase_data.groupby("Gender")["Item Name"].count()
 gender_avg_purchase_price = purchase_data.groupby("Gender")["Price"].mean()
 gender_total_purchase_price = purchase_data.groupby("Gender")["Price"].sum()
