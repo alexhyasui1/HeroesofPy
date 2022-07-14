@@ -32,23 +32,10 @@ count = pd.DataFrame({"Player Count":[unique_names]})
 count
 ```
 
-<div>
+|   | Player Count |
+| - | -----------: |
+| 0 | 576          |
 
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Total Players</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>576</td>
-    </tr>
-  </tbody>
-</table>
-</div>
 
 ## Purchase Analysis
 ```python
@@ -65,20 +52,77 @@ summary = pd.DataFrame({"Number of Unique Items":[item_count],
 
 summary[["Average Price","Total Revenue"]] = summary[["Average Price","Total Revenue"]].applymap("${:,.2f}".format)
 summary
+```
 
-<table id="T_8eab2a8a_9c53_11e8_bca9_d49a20d1630f" > 
-<thead>    <tr> 
-        <th class="blank level0" ></th> 
-        <th class="col_heading level0 col0" >Number of Unique Items</th> 
-        <th class="col_heading level0 col1" >Average Price</th> 
-        <th class="col_heading level0 col2" >Number of Purchases</th> 
-        <th class="col_heading level0 col3" >Total Revenue</th> 
-    </tr></thead> 
-<tbody>    <tr> 
-        <th id="T_8eab2a8a_9c53_11e8_bca9_d49a20d1630flevel0_row0" class="row_heading level0 row0" >0</th> 
-        <td id="T_8eab2a8a_9c53_11e8_bca9_d49a20d1630frow0_col0" class="data row0 col0" >183</td> 
-        <td id="T_8eab2a8a_9c53_11e8_bca9_d49a20d1630frow0_col1" class="data row0 col1" >$3.05</td> 
-        <td id="T_8eab2a8a_9c53_11e8_bca9_d49a20d1630frow0_col2" class="data row0 col2" >780</td> 
-        <td id="T_8eab2a8a_9c53_11e8_bca9_d49a20d1630frow0_col3" class="data row0 col3" >$2,379.77</td> 
-    </tr></tbody> 
-</table> 
+|   | Number of Unique Items | Average Price| Number of Purchases | Total Revenue |
+| - | ---------------------- | ------------ | ------------------- | ------------- |
+| 0 | 179                    | $3.05        | 780                 | $2379.77      |
+
+
+## Gender Analysis
+```python
+#Gender Demographics
+SN = purchase_data.drop_duplicates(subset="SN")
+gender_count = SN["Gender"].value_counts()
+gender_percentage = gender_count / SN["Gender"].count() * 100
+gender_summary_df = pd.DataFrame({"Total Count": gender_count,
+                                 "Percentage of Players": gender_percentage})
+
+gender_summary_df["Percentage of Players"] = gender_summary_df["Percentage of Players"].map("{0:.2f}".format)
+gender_summary_df
+```
+
+|                   | Total Count | Percentage of Players |
+| ----------------: | ----------: | --------------------: |
+| Male              | 484         | 84.03                 |
+| Female            | 81          | 14.06                 |
+| Other / Disclosed | 11          | 1.91                  |
+
+## Purchase and Gender Analysis
+```python
+gender_purchase_count = purchase_data.groupby("Gender")["Item Name"].count()
+gender_avg_purchase_price = purchase_data.groupby("Gender")["Price"].mean()
+gender_total_purchase_price = purchase_data.groupby("Gender")["Price"].sum()
+gender_avg_purchase_total = gender_total_purchase_price / gender_count
+
+gender_purchase_summary_df = pd.DataFrame({"Purchase Count": gender_purchase_count,
+                                       "Average Purchase Price": gender_avg_purchase_price,
+                                       "Total Purchase Value": gender_total_purchase_price,
+                                       "Avg Total Purchase per Person": gender_avg_purchase_total})
+
+gender_purchase_summary_df[["Average Purchase Price","Total Purchase Value","Avg Total Purchase per Person"]] = gender_purchase_summary_df[["Average Purchase Price","Total Purchase Value","Avg Total Purchase per Person"]].applymap("${:.2f}".format)
+gender_purchase_summary_df
+```
+
+|                   | Purchase Count | Average Purchase Price | Total Purchase Value | Avg Total Purchase per Person |
+| ----------------: | -------------: | ---------------------: | -------------------: | ----------------------------: | 
+| Female            | 113            | $3.20                  | $361.94              | $4.47                         |
+| Male              | 652            | $3.02                  | $1967.64             | $4.07                         |
+| Other / Disclosed | 113            | $3.35                  | $50.19               | $4.56                         |
+
+## Age Demographics
+```python
+#Age Demographics
+#Create Bins for age groups
+bins = [0,9,14,19,24,29,34,39,100]
+age_groups = ["0-9","10-14","15-19","20-24","25-29","30-34","35-39","40 and over"]
+
+SN["Age Range"] = pd.cut(SN["Age"],bins, labels = age_groups)
+
+age_purchase_count = SN["Age Range"].value_counts()
+age_percentage_player = (age_purchase_count / SN["SN"].count()) * 100
+
+age_summary = pd.DataFrame({"Total Count": age_purchase_count,
+                           "Percentage of Players": age_percentage_player})
+
+age_summary = age_summary.sort_index()
+age_summary["Percentage of Players"] = age_summary["Percentage of Players"].map("{:.2f}%".format)
+age_summary
+```
+
+|            | Total Count | Percentage of Players |
+| -------: | ----------: | --------------------: |
+| 0-9         | 484         | 84.03                 |
+| 10-14       | 81          | 14.06                 |
+| 15-19       | 11          | 1.91                  |
+| 40 and over | 11          | 1.91                  |
