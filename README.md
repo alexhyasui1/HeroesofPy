@@ -227,16 +227,16 @@ most_profitable = item_summary.sort_values(["Total Purchase Value"], ascending =
 most_profitable.head(10)
 ```
 
-|         |                                    | Purchase Count | Item Price | Total Purchase Value |
-| ------: | ---------------------------------: | -------------: | ---------: | -------------------: |
-| Item ID | Item Name                          |                |            |                      |  
-| 63      | Stormfury Mace                     | 2              | $4.99      | $9.98                |
-| 29      |	Chaos, Ender of the End            | 5              | $1.98      | $9.90                |
-| 173     |	Stormfury Longsword                | 2	            | $4.93      | $9.86                |
-| 38	    | The Void, Vengeance of Dark Magic  | 4              |	$2.37	     | $9.48                |
-| 143	    | Frenzied Scimitar                  | 6              | $1.56      | $9.36                |
-| 7       | Thorn, Satchel of Dark Souls       | 7              | $1.33      | $9.31                |
-| 18      |	Torchlight, Bond of Storms         | 2              | $4.65      | $9.30                |
-| 129     |	Fate, Vengeance of Eternal Justice | 6	            | $1.54      | $9.24                |
-| 166	    | Thirsty Iron Reaver                | 3              |	$3.07	     | $9.21                |
-| 123	    | Twilight's Carver                  | 4              | $2.28      | $9.12                |
+|           |                                    | Purchase Count | Item Price | Total Purchase Value |
+| --------: | ---------------------------------: | -------------: | ---------: | -------------------: |
+| Item ID   | Item Name                          |                |            |                      |  
+| 63        | Stormfury Mace                     | 2              | $4.99      | $9.98                |
+| 29        |	Chaos, Ender of the End            | 5              | $1.98      | $9.90                |
+| 173       |	Stormfury Longsword                | 2	            | $4.93      | $9.86                |
+| 38	      | The Void, Vengeance of Dark Magic  | 4              |	$2.37	     | $9.48                |
+| 143	      | Frenzied Scimitar                  | 6              | $1.56      | $9.36                |
+| 7         | Thorn, Satchel of Dark Souls       | 7              | $1.33      | $9.31                |
+| 18        |	Torchlight, Bond of Storms         | 2              | $4.65      | $9.30                |
+| 129       |	Fate, Vengeance of Eternal Justice | 6	            | $1.54      | $9.24                |
+| 166	      | Thirsty Iron Reaver                | 3              |	$3.07	     | $9.21                |
+| 123	      | Twilight's Carver                  | 4              | $2.28      | $9.12                |
