@@ -1,7 +1,7 @@
 # HeroesofPy
 
 ## Summary
-A free-to-play fantasy game known as Heroes of Pymoli is run by a small independent gaming company where players are given the option to purchase in-game items to enhance their player experience. The task of this analysis is to analyze and generate a statisical report that breaks down the in-game purchasing data into insightful information.
+A free-to-play fantasy game known as Heroes of Pymoli is run by a small independent gaming company where players are given the option to purchase in-game items to enhance their player experience. The task of this analysis is to analyze and generate a statistical report that breaks down the in-game purchasing data into insightful information.
 
 -----
 
